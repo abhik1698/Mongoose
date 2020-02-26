@@ -1,2 +1,4 @@
 # Mongoose
-Create routes and get data from MongoDB
+Start MongoDB service by mongod
+
+> node server
