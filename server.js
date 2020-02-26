@@ -10,15 +10,20 @@ mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true});
 const dbConn = mongoose.connection;
 dbConn.on('error', console.error.bind(console, 'connection error:'));
 dbConn.once('open', function() {
-  // we're connected
   console.log("Mongo Connected!");
 });
+
+app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({ //body elements through the URL
+  extended: true // Be able to use with Postman
+}));
+
 
 app.get("/", (req, res) => {
   res.send("Happy to use API!");
 });
 
-app.get("/books/:id", (req, res) => {
+app.get("/book/:id", (req, res) => {
   Book.findOne({
     _id: req.params.id
   }).exec((err, data) => {
@@ -28,6 +33,7 @@ app.get("/books/:id", (req, res) => {
       res.json(data);
   })
 })
+
 app.get("/books", (req, res) => {
   Book.find({}).exec((err, data) => {
     if(err)
@@ -36,6 +42,29 @@ app.get("/books", (req, res) => {
       res.send(data);
   });
 })
+
+app.post('/addBook', (req, res) => {
+  Book.create(req.body, (err, data) => {
+    if (err) console.log(err);
+    else {
+      res.send(data);
+    }
+  });
+});
+
+app.post("/addBook-2", (req, res) => {
+  var newBook = new Book();
+  newBook.name = req.body.name;
+
+  newBook.save((err, data) => {
+    if(err) console.log(err);
+    else{
+      res.send(data);
+      console.log(data);
+    } 
+  });
+
+});
 
 const PORT = 3002;
 
