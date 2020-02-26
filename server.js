@@ -52,6 +52,32 @@ app.post('/addBook', (req, res) => {
   });
 });
 
+app.put('/updateBook/:id', (req, res) => {
+  Book.findOneAndUpdate({
+   _id: req.params.id
+}, {$set: {name: req.body.name} },
+    {upsert: true},
+    ((err, data) => {
+      if (err) console.log(err);
+      else {
+        res.send(data);
+      }
+    })
+  );
+});
+
+app.delete('/deleteBook/:id', (req, res) => {
+  Book.findOneAndDelete({
+    _id: req.params.id
+  }, (err, data) => {
+    if (err) console.log(err);
+    else {
+      res.send(data);
+      res.status(204);
+    }
+  });
+});
+
 app.post("/addBook-2", (req, res) => {
   var newBook = new Book();
   newBook.name = req.body.name;
