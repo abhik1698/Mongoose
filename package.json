@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "express": "^4.17.1",
+    "http": "^0.0.0",
+    "mongoose": "^5.8.11"
+  },
+  "name": "learno",
+  "version": "1.0.0",
+  "main": "server.js",
+  "author": "AK",
+  "license": "MIT"
+}
